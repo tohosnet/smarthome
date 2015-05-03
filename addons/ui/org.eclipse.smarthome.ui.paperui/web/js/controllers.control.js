@@ -69,7 +69,7 @@ angular.module('SmartHomeManagerApp.controllers.control', []).controller('Contro
 		if(item.state === 'Uninitialized') {
 			return item.state;
 		}
-		var state = item.type === 'NumberItem' ? parseInt(item.state) : item.state;
+		var state = item.type === 'NumberItem' ? parseFloat(item.state) : item.state;
 		
 		if(!item.stateDescription || !item.stateDescription.pattern) {
 			return state;
@@ -139,7 +139,9 @@ angular.module('SmartHomeManagerApp.controllers.control', []).controller('Contro
 			hideSwitch: true
 		},
 		'Switch' : {},
-		'Temperature' : {},
+		'Temperature' : {
+		    label: 'Temperature'
+		},
 		'Water' : {},
 		'Wind' : {},
 		'Window' : {},
