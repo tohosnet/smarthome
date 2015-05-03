@@ -3,11 +3,11 @@
 	<div ng-switch-when="SwitchItem" ng-controller="SwitchItemController">
 		<div layout="row" layout-align="start center" class="dimmer-widget">
 			<div flex="40">
-				<p class="icon-switch">{{getLabel(item.category, item.label,
-					'Switch')}}</p>
+				<p ng-class="getIcon(item.category, 'md-icon-radio-button-on')">{{getLabel(item.category,
+					item.label, 'Switch')}}</p>
 			</div>
 			<div flex="60" layout="row" layout-align="end center"
-				class="dimmer-widget">
+				class="switch-widget">
 				<md-switch ng-disabled="isReadOnly(item)" ng-model="item.state"
 					ng-change="setOn(item.state)" ng-true-value="'ON'"
 					ng-false-value="'OFF'"></md-switch>
@@ -17,7 +17,7 @@
 	<div ng-switch-when="DimmerItem" ng-controller="DimmerItemController">
 		<div layout="row" layout-align="start center" class="dimmer-widget">
 			<div flex="40">
-				<p ng-class="getIcon(item.category, 'icon-brightness-contrast')">{{getLabel(item.category,
+				<p ng-class="getIcon(item.category, 'md-icon-brightness-medium')">{{getLabel(item.category,
 					item.label, 'Dimmer')}}</p>
 			</div>
 			<div flex="60" layout="row" layout-align="end center"
