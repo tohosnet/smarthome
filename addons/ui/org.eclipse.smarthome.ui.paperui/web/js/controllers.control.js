@@ -190,11 +190,22 @@ angular.module('SmartHomeManagerApp.controllers.control', []).controller('Contro
     	return item.stateDescription ? item.stateDescription.readOnly : false;
     }
 }).controller('ItemController', function($rootScope, $scope, itemService) {
-    $scope.sendCommand = function(command) {
+    $scope.editMode = false;
+    $scope.sendCommand = function(command, updateState) {
     	$rootScope.itemUpdates[$scope.item.name] = new Date().getTime();
         itemService.sendCommand({
             itemName : $scope.item.name
         }, command);
+        if(updateState) {
+            $scope.item.state = command;
+        }
+    };
+    $scope.editState = function() {
+        $scope.editMode = true;
+    };
+    $scope.updateState = function() {
+        $scope.sendCommand($scope.item.state, false);
+        $scope.editMode = false;
     };
 }).controller('DefaultItemController', function($scope, itemService) {
 

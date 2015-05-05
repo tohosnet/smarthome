@@ -3,7 +3,7 @@
 	<div ng-switch-when="SwitchItem" ng-controller="SwitchItemController">
 		<div layout="row" layout-align="start center" class="dimmer-widget">
 			<div flex="40">
-				<p ng-class="getIcon(item.category, 'md-icon-radio-button-on')">{{getLabel(item.category,
+				<p ng-class="getIcon(item.category)">{{getLabel(item.category,
 					item.label, 'Switch')}}</p>
 			</div>
 			<div flex="60" layout="row" layout-align="end center"
@@ -79,11 +79,21 @@
 				<p ng-class="getIcon(item.category, 'md-icon-trending-up')">{{getLabel(item.category,
 					item.label, 'Value')}}</p>
 			</div>
-			<div flex="60" layout="row" layout-align="end center">
-				<h1 class="state" ng-if="isReadOnly(item)">{{getStateText(item)}}</h1>
-				<md-input-container> <input
-					ng-if="!isReadOnly(item) && !shouldRenderSlider(item)"
-					ng-model="item.state" ng-blur='sendCommand(item.state)'></input> <md-input-container>
+			<div flex="60">
+				<div ng-show="isReadOnly(item)" layout="row"
+					layout-align="end center">
+					<h1 class="state" ng-if="isReadOnly(item)">{{getStateText(item)}}</h1>
+				</div>
+				<div ng-show="!isReadOnly(item) && !shouldRenderSlider(item)"
+					layout="row" layout-align="end center">
+					<h1 class="state" ng-if="!editMode">{{getStateText(item)}}</h1>
+					<md-input-container ng-show="editMode"> <input
+						ng-model="item.state"></input> </md-input-container>
+					<button class="md-button md-icon-mode-edit" ng-show="!editMode"
+						ng-click="editState()"></button>
+					<button class="md-button md-icon-check" ng-show="editMode"
+						ng-click="updateState()"></button>
+				</div>
 			</div>
 		</div>
 		<div ng-if="shouldRenderSlider(item)" layout="row"
@@ -131,11 +141,24 @@
 				<button class="md-button md-icon-skip-previous"
 					ng-click="sendCommand('PREVIOUS')"></button>
 				<button ng-show="item.state !== 'PLAY'"
-					class="md-button md-icon-play-arrow" ng-click="sendState('PLAY')"></button>
+					class="md-button md-icon-play-arrow"
+					ng-click="sendCommand('PLAY', true)"></button>
 				<button ng-show="item.state === 'PLAY'"
-					class="md-button md-icon-pause" ng-click="sendState('PAUSE')"></button>
+					class="md-button md-icon-pause"
+					ng-click="sendCommand('PAUSE', true)"></button>
 				<button class="md-button md-icon-skip-next"
 					ng-click="sendCommand('NEXT')"></button>
+			</div>
+		</div>
+	</div>
+	<div ng-switch-when="ContactItem" ng-controller="DefaultItemController">
+		<div layout="row" layout-align="end center">
+			<div flex="40" layout="row" layout-align="start center">
+				<p ng-class="getIcon(item.category)">{{getLabel(item.category,
+					item.label, 'Contact')}}</p>
+			</div>
+			<div flex="60" layout="row" layout-align="end center">
+				<h1 class="state">{{getStateText(item)}}</h1>
 			</div>
 		</div>
 	</div>
@@ -145,9 +168,20 @@
 				item.label, 'Value')}}</p>
 		</div>
 		<div layout="row" layout-align="start center">
-			<md-text-float flex="100" ng-if="!item.stateDescription.readOnly"
-				ng-model="item.state" ng-blur='sendCommand(item.state)'></md-text-float>
-			<h1 ng-if="item.stateDescription.readOnly" class="state">{{getStateText(item)}}</h1>
+			<div ng-show="isReadOnly(item)" layout="row"
+				layout-align="start center" flex>
+				<h1 class="state" ng-if="isReadOnly(item)">{{getStateText(item)}}</h1>
+			</div>
+			<div ng-show="!isReadOnly(item)"
+				layout="row" layout-align="end center" flex="100">
+				<h1 class="state" ng-if="!editMode" flex>{{getStateText(item)}}</h1>
+				<md-input-container ng-show="editMode" flex> <input
+					ng-model="item.state"></input> </md-input-container>
+				<button class="md-button md-icon-mode-edit" ng-show="!editMode"
+					ng-click="editState()"></button>
+				<button class="md-button md-icon-check" ng-show="editMode"
+					ng-click="updateState()"></button>
+			</div>
 		</div>
 	</div>
 </div>
