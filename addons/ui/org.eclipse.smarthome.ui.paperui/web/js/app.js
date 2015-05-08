@@ -1,4 +1,4 @@
-var paperUIVersion = '0.6';
+var paperUIVersion = '0.8';
 
 angular.module('SmartHomeManagerApp', [
   'SmartHomeManagerApp.controllers',

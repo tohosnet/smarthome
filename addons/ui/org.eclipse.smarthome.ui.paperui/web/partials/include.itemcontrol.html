@@ -84,13 +84,11 @@
 					layout-align="end center">
 					<h1 class="state" ng-if="isReadOnly(item)">{{getStateText(item)}}</h1>
 				</div>
-				<div ng-show="!isReadOnly(item) && !shouldRenderSlider(item)"
+				<div ng-show="!isReadOnly(item)"
 					layout="row" layout-align="end center">
-					<h1 class="state" ng-if="!editMode">{{getStateText(item)}}</h1>
+					<h1 class="state edit" ng-if="!editMode" ng-click="editState()">{{getStateText(item)}}</h1>
 					<md-input-container ng-show="editMode"> <input
 						ng-model="item.state"></input> </md-input-container>
-					<button class="md-button md-icon-mode-edit" ng-show="!editMode"
-						ng-click="editState()"></button>
 					<button class="md-button md-icon-check" ng-show="editMode"
 						ng-click="updateState()"></button>
 				</div>
@@ -114,7 +112,11 @@
 					item.label, 'Position')}}</p>
 			</div>
 			<div flex="60" layout="row" layout-align="end center">
-				<h1>{{item.state}} %</h1>
+				<h1 class="state editable text-center" ng-if="!editMode" ng-click="editState()">{{item.state}} %</h1>
+				<md-input-container ng-show="editMode" flex> <input
+					ng-model="item.state"></input> </md-input-container>
+				<button class="md-button md-icon-check" ng-show="editMode"
+					ng-click="updateState()"></button>
 			</div>
 		</div>
 		<div layout="row" layout-align="end center">
@@ -162,6 +164,26 @@
 			</div>
 		</div>
 	</div>
+	<div ng-switch-when="LocationItem"  ng-controller="DefaultItemController">
+		<div layout="row" layout-align="start center">
+			<p class="md-icon-place">{{getLabel(item.category,
+				item.label, 'Location')}}</p>
+		</div>
+		<div layout="row" layout-align="start center">
+			<div ng-show="isReadOnly(item)" layout="row"
+				layout-align="start center" flex>
+				<h1 class="state" ng-if="isReadOnly(item)">{{getStateText(item)}}</h1>
+			</div>
+			<div ng-show="!isReadOnly(item)"
+				layout="row" layout-align="end center" flex="100">
+				<h1 class="state editable text-center" ng-if="!editMode" ng-click="editState()" flex>{{getStateText(item)}}</h1>
+				<md-input-container ng-show="editMode" flex> <input
+					ng-model="item.state"></input> </md-input-container>
+				<button class="md-button md-icon-check" ng-show="editMode"
+					ng-click="updateState()"></button>
+			</div>
+		</div>
+	</div>
 	<div ng-switch-default ng-controller="DefaultItemController">
 		<div layout="row" layout-align="start center">
 			<p ng-class="getIcon(item.category)">{{getLabel(item.category,
@@ -174,11 +196,9 @@
 			</div>
 			<div ng-show="!isReadOnly(item)"
 				layout="row" layout-align="end center" flex="100">
-				<h1 class="state" ng-if="!editMode" flex>{{getStateText(item)}}</h1>
+				<h1 class="state editable text-center" ng-if="!editMode" ng-click="editState()" flex>{{getStateText(item)}}</h1>
 				<md-input-container ng-show="editMode" flex> <input
 					ng-model="item.state"></input> </md-input-container>
-				<button class="md-button md-icon-mode-edit" ng-show="!editMode"
-					ng-click="editState()"></button>
 				<button class="md-button md-icon-check" ng-show="editMode"
 					ng-click="updateState()"></button>
 			</div>
